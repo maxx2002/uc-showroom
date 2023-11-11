@@ -13,7 +13,7 @@
                     <h3>{{ $customer->name }}</h3>
                     <p>Address: {{ $customer->address }}</p>
                     <p>Phone Number: {{ $customer->phone_number }}</p>
-                    <p>ID Card: {{ $customer->id_card }}</p>
+                    <img src="{{ asset('storage/'.$customer->id_card) }}" alt="..." style="height: 300px">
                 </div>
             </div>
         </div>

@@ -45,9 +45,9 @@
                                     <option value="App\Models\Motorcycle" selected>Motorcycle</option>
                                     <option value="App\Models\Truck">Truck</option>
                                 @else
-                                    <option value="App\Models\Car"Car</option>
+                                    <option value="App\Models\Car">Car</option>
                                     <option value="App\Models\Motorcycle">Motorcycle</option>
-                                    <option value="App\Models\Truck" selected>>Truck</option>
+                                    <option value="App\Models\Truck" selected>Truck</option>
                                 @endif
                                 
                             </select>

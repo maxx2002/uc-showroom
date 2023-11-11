@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Amount</label>
-                                    <input type="number" class="form-control" name="amount[]" value="{{ $order_vehicle->amount }}">
+                                    <input type="number" class="form-control" name="amount[]" value="{{ $order_vehicle->amount }}" required>
                                 </div>
                             @endforeach
                         </div>
