@@ -18,8 +18,7 @@ return new class extends Migration
             $table->integer('total_passenger');
             $table->string('manufacture');
             $table->integer('price');
-            $table->unsignedBigInteger('vehicleable_id');
-            $table->string('vehicleable_type');
+            $table->morphs('vehicleable');
             $table->timestamps();
         });
     }

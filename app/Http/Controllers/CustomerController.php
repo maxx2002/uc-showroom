@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -16,9 +18,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        
+        $customers = Customer::all();
 
-        return view('customer.index');
+        return view('customer.index')->with('customers', $customers);
     }
 
     /**
@@ -26,8 +28,6 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        
-
         return view('customer.create');
     }
 
@@ -36,7 +36,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // $imageName = time().'.'.$request->id_card->extension();
+
+        Customer::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'id_card' => $request->file('id_card')->store('id_cards', 'public')
+            // 'id_card' => $request->id_card->move(public_path('images'), $imageName)
+        ]);
 
         return redirect('customer');
     }
@@ -46,9 +54,9 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        
+        $customer = Customer::findOrFail($id);
 
-        return view('customer.details');
+        return view('customer.details')->with('customer', $customer);
     }
 
     /**
@@ -56,9 +64,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $customer = Customer::findOrFail($id);
 
-        return view('customer.edit');
+        return view('customer.edit')->with('customer', $customer);
     }
 
     /**
@@ -66,7 +74,26 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $customer = Customer::findOrFail($id);
+
+        $id_card = $request->file('id_card');
+
+        if ($id_card) {
+            Storage::disk('public')->delete($request->old_id_card);
+
+            $customer->update([
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone_number' => $request->phone_number,
+                'id_card' => $id_card->store('id_cards', 'public')
+            ]);
+        } else {
+            $customer->update([
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone_number' => $request->phone_number,
+            ]);
+        }
 
         return redirect('customer');
     }
@@ -76,7 +103,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        $customer = Customer::findOrFail($id);
+        Storage::disk('public')->delete('public', $customer->id_card);
+        $customer->delete();
 
         return redirect('customer');
     }

@@ -18,25 +18,35 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>ID Card</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($customers as $customer) --}}
+                                @foreach ($customers as $customer)
                                     <tr>
-                                        {{-- <td>{{ $loop->iteration }}</td> --}}
-                                        <td></td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $customer->name }}</td>
+                                        <td>{{ $customer->address }}</td>
+                                        <td>{{ $customer->phone_number }}</td>
                                         <td>
-                                            <a href="{{ url('customer/' . $customer->id) }}" class="btn btn-info">View</a>
-                                            <a href="{{ url('/customer/' . $customer->id . '/edit') }}" class="btn btn-primary">Edit</a>
-                                            <form action="{{ url('/customer/' . $customer->id) }}" method="POST">
+                                            <img src="{{ asset('storage/'.$customer->id_card) }}" alt="..." style="height: 100px">
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('customer.show', $customer->id) }}" class="btn btn-info">View</a>
+                                            <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-primary">Edit</a>
+                                            <form action="{{ route('customer.destroy', $customer->id) }}" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
-                                {{-- @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

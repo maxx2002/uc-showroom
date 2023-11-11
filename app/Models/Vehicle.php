@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Vehicle extends Model
 {
@@ -20,4 +21,9 @@ class Vehicle extends Model
         'vehicleable_id',
         'vehicleable_type'
     ];
+
+    public function vehicleable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }

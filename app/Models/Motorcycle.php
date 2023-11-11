@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Motorcycle extends Model
 {
@@ -20,4 +21,9 @@ class Motorcycle extends Model
         'loan_date',
         'loan_due'
     ];
+
+    public function vehicles(): MorphMany
+    {
+        return $this->morphMany(Vehicle::class, 'vehicleable');
+    }
 }

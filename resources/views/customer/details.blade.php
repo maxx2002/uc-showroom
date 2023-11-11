@@ -10,7 +10,10 @@
                 <div class="card-header">Customer Details</div>
 
                 <div class="card-body">
-                    
+                    <h3>{{ $customer->name }}</h3>
+                    <p>Address: {{ $customer->address }}</p>
+                    <p>Phone Number: {{ $customer->phone_number }}</p>
+                    <p>ID Card: {{ $customer->id_card }}</p>
                 </div>
             </div>
         </div>
