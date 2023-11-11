@@ -74,8 +74,11 @@ class OrderController extends Controller
     public function edit(string $id)
     {
         $order = Order::findOrFail($id);
+
+        $customers = Customer::all();
+        $vehicles = Vehicle::all();
         
-        return view('order.edit')->with('order', $order);
+        return view('order.edit', compact('order', 'customers', 'vehicles'));
     }
 
     /**
@@ -86,10 +89,15 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $order->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
+            'customer_id' => $request->customer_id
         ]);
+
+        foreach($request->vehicle_id as $key=>$value) {
+            $order->order_vehicle[$key]->update([
+                'vehicle_id' => $value,
+                'amount' => $request->amount[$key]
+            ]);
+        }
         
         return redirect('/');
     }

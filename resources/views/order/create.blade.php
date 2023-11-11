@@ -57,24 +57,24 @@
 </div>
 
 <script>
-    var fieldId = 0;
+    var field_id = 0;
  
-    function add_element(parent_id, element_tag, element_id, html){
+    function add_element(parent_id, element_tag, element_id, html) {
         var id = document.getElementById(parent_id);
-        var newElement = document.createElement(element_tag);
-        newElement.setAttribute('id', element_id);
-        newElement.innerHTML = html;
-        id.appendChild(newElement);
+        var new_element = document.createElement(element_tag);
+        new_element.setAttribute('id', element_id);
+        new_element.innerHTML = html;
+        id.appendChild(new_element);
     }
   
-    function remove_field(element_id){
-        var fieldId = "field-"+element_id;
-        var element = document.getElementById(fieldId);
+    function remove_field(element_id) {
+        var field_id = "field-"+element_id;
+        var element = document.getElementById(field_id);
         element.parentNode.removeChild(element);
     }
     
-    function add_field(){
-        fieldId++;
+    function add_field() {
+        field_id++;
         var html = '<div class="mb-3">' +
             '<label class="form-label">Vehicle</label>' + 
             '<select name="vehicle_id[]" id="" class="form-control">' +
@@ -86,10 +86,10 @@
             '<div class="mb-3">' +
             '<label class="form-label">Amount</label>' +
             '<input type="number" class="form-control" name="amount[]">' +
-            '<button onclick="remove_field('+fieldId+');"><span class="glyphicon glyphicon-minus"></span></button><br />' +
+            '<button onclick="remove_field('+field_id+');"><span class="glyphicon glyphicon-minus"></span></button><br />' +
             '</div>'
             ;
-        add_element('vehicle_container', 'div', 'field-'+ fieldId, html);
+        add_element('vehicle_container', 'div', 'field-'+ field_id, html);
     }
 </script>
 @endsection
