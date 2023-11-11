@@ -19,11 +19,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Year</label>
-                            <input type="text" class="form-control" name="year" value="{{ $vehicle->year }}">
+                            <input type="number" class="form-control" name="year" value="{{ $vehicle->year }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Total Passenger</label>
-                            <input type="text" class="form-control" name="total_passenger" value="{{ $vehicle->total_passenger }}">
+                            <input type="number" class="form-control" name="total_passenger" value="{{ $vehicle->total_passenger }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Manufacture</label>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Price</label>
-                            <input type="text" class="form-control" name="price" value="{{ $vehicle->price }}">
+                            <input type="number" class="form-control" name="price" value="{{ $vehicle->price }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Type</label>
@@ -59,27 +59,27 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Trunk Area</label>
-                                <input type="text" class="form-control" name="trunk_area" value="{{ $vehicle->vehicleable->trunk_area }}">
+                                <input type="number" class="form-control" name="trunk_area" value="{{ $vehicle->vehicleable->trunk_area }}">
                             </div>
                         </div>
                         <div id="motorcycleInput" style="display: none">
                             <div class="mb-3">
                                 <label class="form-label">Trunk Size</label>
-                                <input type="text" class="form-control" name="trunk_size" value="{{ $vehicle->vehicleable->trunk_size }}">
+                                <input type="number" class="form-control" name="trunk_size" value="{{ $vehicle->vehicleable->trunk_size }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Fuel Capacity</label>
-                                <input type="text" class="form-control" name="fuel_capacity" value="{{ $vehicle->vehicleable->fuel_capacity }}">
+                                <input type="number" class="form-control" name="fuel_capacity" value="{{ $vehicle->vehicleable->fuel_capacity }}">
                             </div>
                         </div>
                         <div id="truckInput" style="display: none">
                             <div class="mb-3">
                                 <label class="form-label">Wheel</label>
-                                <input type="text" class="form-control" name="wheel" value="{{ $vehicle->vehicleable->wheel }}">
+                                <input type="number" class="form-control" name="wheel" value="{{ $vehicle->vehicleable->wheel }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Cargo Area</label>
-                                <input type="text" class="form-control" name="cargo_area" value="{{ $vehicle->vehicleable->cargo_area }}">
+                                <input type="number" class="form-control" name="cargo_area" value="{{ $vehicle->vehicleable->cargo_area }}">
                             </div>
                         </div>
                         

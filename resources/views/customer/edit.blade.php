@@ -24,7 +24,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" name="phone_number" value="{{ $customer->phone_number }}">
+                            <input type="number" class="form-control" name="phone_number" value="{{ $customer->phone_number }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">ID Card</label>

@@ -31,7 +31,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->customers->name }}</td>
-                                        <td><{{ $order->customers->address }}/td>
+                                        <td>{{ $order->customers->address }}</td>
                                         <td>
                                             <a href="{{ url('order/' . $order->id) }}" class="btn btn-info">View</a>
                                             <a href="{{ url('/order/' . $order->id . '/edit') }}" class="btn btn-primary">Edit</a>

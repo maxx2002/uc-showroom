@@ -18,11 +18,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Year</label>
-                            <input type="text" class="form-control" name="year" value="{{ old('year') }}">
+                            <input type="number" class="form-control" name="year" value="{{ old('year') }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Total Passenger</label>
-                            <input type="text" class="form-control" name="total_passenger" value="{{ old('total_passenger') }}">
+                            <input type="number" class="form-control" name="total_passenger" value="{{ old('total_passenger') }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Manufacture</label>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Price</label>
-                            <input type="text" class="form-control" name="price" value="{{ old('price') }}">
+                            <input type="number" class="form-control" name="price" value="{{ old('price') }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Type</label>
@@ -47,27 +47,27 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Trunk Area</label>
-                                <input type="text" class="form-control" name="trunk_area">
+                                <input type="number" class="form-control" name="trunk_area">
                             </div>
                         </div>
                         <div id="motorcycleInput" style="display: none">
                             <div class="mb-3">
                                 <label class="form-label">Trunk Size</label>
-                                <input type="text" class="form-control" name="trunk_size">
+                                <input type="number" class="form-control" name="trunk_size">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Fuel Capacity</label>
-                                <input type="text" class="form-control" name="fuel_capacity">
+                                <input type="number" class="form-control" name="fuel_capacity">
                             </div>
                         </div>
                         <div id="truckInput" style="display: none">
                             <div class="mb-3">
                                 <label class="form-label">Wheel</label>
-                                <input type="text" class="form-control" name="wheel">
+                                <input type="number" class="form-control" name="wheel">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Cargo Area</label>
-                                <input type="text" class="form-control" name="cargo_area">
+                                <input type="number" class="form-control" name="cargo_area">
                             </div>
                         </div>
                         

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderVehicle;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -24,7 +27,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('order.create');
+        $customers = Customer::all();
+        $vehicles = Vehicle::all();
+
+        return view('order.create', compact('customers', 'vehicles'));
     }
 
     /**
@@ -32,20 +38,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'phone_number' => 'required|numeric',
-            'id_card' => 'required'
+        $order = Order::query()->create([
+            'customer_id' => $request->customer_id
         ]);
 
-        Order::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'id_card' => $request->file('id_card')->store('id_cards', 'public')
-        ]);
-        
+        foreach($request->vehicle_id as $key=>$value) {
+            OrderVehicle::create([
+                'order_id' => $order->id,
+                'vehicle_id' => $value,
+                'amount' => $request->amount[$key]
+            ]);
+        }
+
         return redirect('/');
     }
 
@@ -55,8 +59,13 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::findOrFail($id);
+
+        $total_price = 0;
+        foreach ($order->order_vehicle as $vehicle) {
+            $total_price += $vehicle->vehicles->price * $vehicle->amount;
+        }
         
-        return view('order.details')->with('order', $order);
+        return view('order.details', compact('order', 'total_price'));
     }
 
     /**

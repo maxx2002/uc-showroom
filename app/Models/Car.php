@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Car extends Model
 {
@@ -17,8 +17,8 @@ class Car extends Model
         'trunk_area'
     ];
 
-    public function vehicle(): MorphMany
+    public function vehicle(): MorphOne
     {
-        return $this->morphMany(Vehicle::class, 'vehicleable');
+        return $this->morphOne(Vehicle::class, 'vehicleable');
     }
 }
