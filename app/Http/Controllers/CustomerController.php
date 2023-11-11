@@ -40,7 +40,7 @@ class CustomerController extends Controller
             'name' => 'required',
             'address' => 'required',
             'phone_number' => 'required|numeric',
-            'id_card' => 'required'
+            'id_card' => 'required|max:2096'
         ]);
 
         Customer::create([
@@ -83,7 +83,8 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone_number' => 'required|numeric'
+            'phone_number' => 'required|numeric',
+            'id_card' => 'required|max:2096'
         ]);
 
         $id_card = $request->file('id_card');
