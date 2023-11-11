@@ -14,4 +14,14 @@ class Order extends Model
     protected $fillable = [
         'customer_id'
     ];
+
+    public function customers()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    } 
+
+    public function order_vehicle()
+    {
+        return $this->hasMany(OrderVehicle::class, 'order_id', 'id');
+    }
 }

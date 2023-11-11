@@ -22,7 +22,7 @@ class Motorcycle extends Model
         'loan_due'
     ];
 
-    public function vehicles(): MorphMany
+    public function vehicle(): MorphMany
     {
         return $this->morphMany(Vehicle::class, 'vehicleable');
     }

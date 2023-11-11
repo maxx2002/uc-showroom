@@ -18,21 +18,27 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Order ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Address</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td></td>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->customers->name }}</td>
+                                        <td><{{ $order->customers->address }}/td>
                                         <td>
                                             <a href="{{ url('order/' . $order->id) }}" class="btn btn-info">View</a>
                                             <a href="{{ url('/order/' . $order->id . '/edit') }}" class="btn btn-primary">Edit</a>
                                             <form action="{{ url('/order/' . $order->id) }}" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

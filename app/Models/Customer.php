@@ -18,4 +18,9 @@ class Customer extends Model
         'phone_number',
         'id_card'
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
 }

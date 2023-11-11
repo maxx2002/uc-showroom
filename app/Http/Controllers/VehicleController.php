@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\Motorcycle;
+use App\Models\Truck;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -27,8 +30,6 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        
-        
         return view('vehicle.create');
     }
 
@@ -37,7 +38,54 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'model' => 'required',
+            'year' => 'required|numeric',
+            'total_passenger' => 'required|numeric',
+            'manufacture' => 'required',
+            'price' => 'required|numeric'
+        ]);
+
+        if ($request->type == "App\Models\Car") {
+            $car = Car::query()->create([
+                'fuel_type' => $request->fuel_type,
+                'trunk_area' => $request->trunk_area
+            ]);
+
+            $car->vehicle()->create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'total_passenger' => $request->total_passenger,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price
+            ]);
+        } else if ($request->type == "App\Models\Motorcycle") {
+            $motorcycle = Motorcycle::query()->create([
+                'trunk_size' => $request->trunk_size,
+                'fuel_capacity' => $request->fuel_capacity
+            ]);
+
+            $motorcycle->vehicle()->create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'total_passenger' => $request->total_passenger,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price
+            ]);
+        } else {
+            $truck = Truck::query()->create([
+                'wheel' => $request->wheel,
+                'cargo_area' => $request->cargo_area
+            ]);
+
+            $truck->vehicle()->create([
+                'model' => $request->model,
+                'year' => $request->year,
+                'total_passenger' => $request->total_passenger,
+                'manufacture' => $request->manufacture,
+                'price' => $request->price
+            ]);
+        }
 
         return redirect('vehicle');
     }
@@ -47,9 +95,9 @@ class VehicleController extends Controller
      */
     public function show(string $id)
     {
+        $vehicle = Vehicle::findOrFail($id);
         
-        
-        return view('vehicle.details');
+        return view('vehicle.details')->with('vehicle', $vehicle);
     }
 
     /**
@@ -57,9 +105,10 @@ class VehicleController extends Controller
      */
     public function edit(string $id)
     {
+        $vehicle = Vehicle::findOrFail($id);
+        // dd($vehicle->vehicleable_type);
         
-        
-        return view('vehicle.edit');
+        return view('vehicle.edit')->with('vehicle', $vehicle);
     }
 
     /**
@@ -67,8 +116,75 @@ class VehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $vehicle = Vehicle::findOrFail($id);
 
+        $request->validate([
+            'model' => 'required',
+            'year' => 'required|numeric',
+            'total_passenger' => 'required|numeric',
+            'manufacture' => 'required',
+            'price' => 'required|numeric'
+        ]);
+
+        $vehicle->update([
+            'model' => $request->model,
+            'year' => $request->year,
+            'total_passenger' => $request->total_passenger,
+            'manufacture' => $request->manufacture,
+            'price' => $request->price
+        ]);
+
+        if($vehicle->vehicleable_type == $request->type) {
+            if ($request->type == "App\Models\Car") {
+                $vehicle->vehicleable->update([
+                    'fuel_type' => $request->fuel_type,
+                    'trunk_area' => $request->trunk_area
+                ]);
+            } else if ($request->type == "App\Models\Motorcycle") {
+                $vehicle->vehicleable->update([
+                    'trunk_size' => $request->trunk_size,
+                    'fuel_capacity' => $request->fuel_capacity
+                ]);
+            } else {
+                $vehicle->vehicleable->update([
+                    'wheel' => $request->wheel,
+                    'cargo_area' => $request->cargo_area
+                ]);
+            }
+        } else {
+            if ($request->type == "App\Models\Car") {
+                $car = Car::query()->create([
+                    'fuel_type' => $request->fuel_type,
+                    'trunk_area' => $request->trunk_area
+                ]);
+    
+                $vehicle->update([
+                    'vehicleable_type' => "App\Models\Car",
+                    'vehicleable_id' => $car->id
+                ]);
+            } else if ($request->type == "App\Models\Motorcycle") {
+                $motorcycle = Motorcycle::query()->create([
+                    'trunk_size' => $request->trunk_size,
+                    'fuel_capacity' => $request->fuel_capacity
+                ]);
+    
+                $vehicle->update([
+                    'vehicleable_type' => "App\Models\Motorcycle",
+                    'vehicleable_id' => $motorcycle->id
+                ]);
+            } else {
+                $truck = Truck::query()->create([
+                    'wheel' => $request->wheel,
+                    'cargo_area' => $request->cargo_area
+                ]);
+    
+                $vehicle->update([
+                    'vehicleable_type' => "App\Models\Truck",
+                    'vehicleable_id' => $truck->id
+                ]);
+            }
+        }
+        
         return redirect('vehicle');
     }
 
@@ -77,7 +193,8 @@ class VehicleController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->delete();
 
         return redirect('vehicle');
     }

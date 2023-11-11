@@ -18,21 +18,37 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Model</th>
+                                    <th>Manufacture</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($vehicles as $vehicle)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td></td>
+                                        <td>
+                                            @if ($vehicle->vehicleable_type == "App\Models\Car")
+                                                Car
+                                            @elseif ($vehicle->vehicleable_type == "App\Models\Motorcycle")
+                                                Motorcycle
+                                            @else
+                                                Truck
+                                            @endif
+                                        </td>
+                                        <td>{{ $vehicle->model }}</td>
+                                        <td>{{ $vehicle->manufacture }}</td>
+                                        <td>{{ $vehicle->price }}</td>
                                         <td>
                                             <a href="{{ url('vehicle/' . $vehicle->id) }}" class="btn btn-info">View</a>
                                             <a href="{{ url('/vehicle/' . $vehicle->id . '/edit') }}" class="btn btn-primary">Edit</a>
                                             <form action="{{ url('/vehicle/' . $vehicle->id) }}" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

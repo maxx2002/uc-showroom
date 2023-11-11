@@ -36,14 +36,18 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        // $imageName = time().'.'.$request->id_card->extension();
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone_number' => 'required|numeric',
+            'id_card' => 'required'
+        ]);
 
         Customer::create([
             'name' => $request->name,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'id_card' => $request->file('id_card')->store('id_cards', 'public')
-            // 'id_card' => $request->id_card->move(public_path('images'), $imageName)
         ]);
 
         return redirect('customer');
@@ -75,6 +79,12 @@ class CustomerController extends Controller
     public function update(Request $request, string $id)
     {
         $customer = Customer::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone_number' => 'required|numeric'
+        ]);
 
         $id_card = $request->file('id_card');
 

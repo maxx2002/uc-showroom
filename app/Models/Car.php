@@ -17,7 +17,7 @@ class Car extends Model
         'trunk_area'
     ];
 
-    public function vehicles(): MorphMany
+    public function vehicle(): MorphMany
     {
         return $this->morphMany(Vehicle::class, 'vehicleable');
     }

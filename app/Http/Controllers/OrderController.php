@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -23,8 +24,6 @@ class OrderController extends Controller
      */
     public function create()
     {
-        
-        
         return view('order.create');
     }
 
@@ -33,7 +32,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone_number' => 'required|numeric',
+            'id_card' => 'required'
+        ]);
+
+        Order::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'id_card' => $request->file('id_card')->store('id_cards', 'public')
+        ]);
         
         return redirect('/');
     }
@@ -43,9 +54,9 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
+        $order = Order::findOrFail($id);
         
-        
-        return view('order.details');
+        return view('order.details')->with('order', $order);
     }
 
     /**
@@ -53,9 +64,9 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
+        $order = Order::findOrFail($id);
         
-        
-        return view('order.edit');
+        return view('order.edit')->with('order', $order);
     }
 
     /**
@@ -63,7 +74,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $order = Order::findOrFail($id);
+
+        $order->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+        ]);
         
         return redirect('/');
     }
@@ -73,7 +90,8 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        $order = Order::findOrFail($id);
+        $order->delete();
         
         return redirect('/');
     }

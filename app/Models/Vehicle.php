@@ -26,4 +26,9 @@ class Vehicle extends Model
     {
         return $this->morphTo();
     }
+
+    public function order_vehicle()
+    {
+        return $this->hasMany(OrderVehicle::class, 'vehicle_id', 'id');
+    }
 }
