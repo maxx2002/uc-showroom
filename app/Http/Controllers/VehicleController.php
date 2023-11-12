@@ -47,6 +47,23 @@ class VehicleController extends Controller
         ]);
 
         if ($request->type == "App\Models\Car") {
+            $request->validate([
+                'fuel_type' => 'required',
+                'trunk_area' => 'required|numeric'
+            ]);
+        } else if ($request->type == "App\Models\Motorcycle") {
+            $request->validate([
+                'trunk_size' => 'required|numeric',
+                'fuel_capacity' => 'required|numeric'
+            ]);
+        } else {
+            $request->validate([
+                'wheel' => 'required|numeric',
+                'cargo_area' => 'required|numeric'
+            ]);
+        }
+
+        if ($request->type == "App\Models\Car") {
             $car = Car::query()->create([
                 'fuel_type' => $request->fuel_type,
                 'trunk_area' => $request->trunk_area
@@ -125,6 +142,23 @@ class VehicleController extends Controller
             'manufacture' => 'required',
             'price' => 'required|numeric'
         ]);
+
+        if ($request->type == "App\Models\Car") {
+            $request->validate([
+                'fuel_type' => 'required',
+                'trunk_area' => 'required|numeric'
+            ]);
+        } else if ($request->type == "App\Models\Motorcycle") {
+            $request->validate([
+                'trunk_size' => 'required|numeric',
+                'fuel_capacity' => 'required|numeric'
+            ]);
+        } else {
+            $request->validate([
+                'wheel' => 'required|numeric',
+                'cargo_area' => 'required|numeric'
+            ]);
+        }
 
         $vehicle->update([
             'model' => $request->model,

@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Amount</label>
-                                    <input type="number" class="form-control" name="amount[]">
+                                    <input type="number" class="form-control" name="amount[]" required>
                                 </div>
                             </div>
 
@@ -85,7 +85,7 @@
             '</div>' +
             '<div class="mb-3">' +
             '<label class="form-label">Amount</label>' +
-            '<input type="number" class="form-control" name="amount[]">' +
+            '<input type="number" class="form-control" name="amount[]" required>' +
             '<button onclick="remove_field('+field_id+');"><span class="glyphicon glyphicon-minus"></span></button><br />' +
             '</div>'
             ;

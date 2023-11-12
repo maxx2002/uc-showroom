@@ -39,7 +39,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'amount' => 'required'
+            'amount.*' => 'min:0|not_in:0|numeric'
         ]);
 
         $order = Order::query()->create([
@@ -91,21 +91,25 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
         $order = Order::findOrFail($id);
-        
+
         $request->validate([
-            'amount' => 'required'
+            'amount.*' => 'numeric',
+            'amount.0' => 'required|numeric|min:0|not_in:0',
         ]);
-        
 
         $order->update([
             'customer_id' => $request->customer_id
         ]);
 
         foreach($request->vehicle_id as $key=>$value) {
-            $order->order_vehicle[$key]->update([
-                'vehicle_id' => $value,
-                'amount' => $request->amount[$key]
-            ]);
+            if ($request->amount[$key] > 0) {
+                $order->order_vehicle[$key]->update([
+                    'vehicle_id' => $value,
+                    'amount' => $request->amount[$key]
+                ]);
+            } else {
+                $order->order_vehicle[$key]->delete();
+            }
         }
         
         return redirect('/');
