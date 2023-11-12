@@ -92,23 +92,27 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $request->validate([
-            'amount.*' => 'numeric',
-            'amount.0' => 'required|numeric|min:0|not_in:0',
-        ]);
+        if(!is_null($request->vehicle_id)) {
+            $request->validate([
+                'amount.*' => 'numeric',
+                'amount.0' => 'required|numeric|min:0|not_in:0',
+            ]);
+        }
 
         $order->update([
             'customer_id' => $request->customer_id
         ]);
 
-        foreach($request->vehicle_id as $key=>$value) {
-            if ($request->amount[$key] > 0) {
-                $order->order_vehicle[$key]->update([
-                    'vehicle_id' => $value,
-                    'amount' => $request->amount[$key]
-                ]);
-            } else {
-                $order->order_vehicle[$key]->delete();
+        if(!is_null($request->vehicle_id)) {
+            foreach($request->vehicle_id as $key=>$value) {
+                if ($request->amount[$key] > 0) {
+                    $order->order_vehicle[$key]->update([
+                        'vehicle_id' => $value,
+                        'amount' => $request->amount[$key]
+                    ]);
+                } else {
+                    $order->order_vehicle[$key]->delete();
+                }
             }
         }
         
